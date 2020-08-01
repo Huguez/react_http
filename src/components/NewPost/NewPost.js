@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-
+// import axios from 'axios';
+import instance from '../../axios';
 import classes from  './NewPost.css';
 
 class NewPost extends Component {
@@ -17,7 +17,7 @@ class NewPost extends Component {
             autthor: 'Huguez'
         };
 
-        axios.post( '/posts', data ).then( 
+        instance.post( '/posts', data ).then( 
             ( resp ) => {
                 console.log(resp);
             }
