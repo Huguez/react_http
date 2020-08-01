@@ -10,6 +10,7 @@ class Blog extends Component {
     state={
         posts:[],
         selectedId: null,
+        error: false
     }
     
     componentDidMount(){
@@ -22,7 +23,9 @@ class Blog extends Component {
                 
                 this.setState( { posts: updatePosts } );
             }
-        );
+        ).catch( err =>{
+            this.setState( { error: true } );
+        });
     }
     
     postSelector = ( id ) => {
@@ -31,13 +34,18 @@ class Blog extends Component {
 
 
     render () {
-        const posts = this.state.posts.map( ( p ) => { 
-            return < Post 
-                clicked={ () => this.postSelector( p.id )  }
-                key={ p.id }
-                title={ p.title } 
-                author={ p.author } />
-         });
+        let posts = <p style={ { textAlign: 'center' } }> Algo Salio Mal!!!!! </p>;
+        
+        if( !this.state.error ){
+            posts = this.state.posts.map( ( p ) => { 
+                return < Post 
+                    clicked={ () => this.postSelector( p.id )  }
+                    key={ p.id }
+                    title={ p.title } 
+                    author={ p.author } />
+            });
+        }
+
         return (
             <div>
                 <section className={classes.Posts}>
