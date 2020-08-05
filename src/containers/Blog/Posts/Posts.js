@@ -11,6 +11,8 @@ class Posts extends Component{
     }
 
     componentDidMount(){
+        // console.log(this.props.match.url);
+
         instance.get( '/posts' ).then(
             ( resp ) => {
                 const posts = resp.data.slice( 0, 4 );
