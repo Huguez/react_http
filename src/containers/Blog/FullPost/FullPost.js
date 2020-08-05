@@ -2,19 +2,18 @@ import React, { Component } from 'react';
 
 import classes from './FullPost.css';
 // import axios from 'axios';
-import instance from '../../axios';
+import instance from '../../../axios';
 
 class FullPost extends Component {
     state={
         loadedPost: null
     }
 
-
-
-    componentDidUpdate(){
-        if( this.props.id ){
+    componentDidMount(){
+        console.log( this.props );
+        if( this.props.match.params.id ){
             if(  !this.state.loadedPost || ( this.state.loadedPost && this.state.loadedPost.id !== this.props.id ) ){
-                instance.get( '/posts/' + this.props.id ).then(
+                instance.get( '/posts/' + this.props.match.params.id ).then(
                     ( resp ) => {
                         this.setState( { loadedPost: resp.data });
                         // console.log( "aqui" );
