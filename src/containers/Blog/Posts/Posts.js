@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import instance from '../../../axios';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 
 import Post from '../../../components/Post/Post'
 import classes from "./Posts.css";
+import FullPost from '../FullPost/FullPost';
 
 class Posts extends Component{
     
@@ -20,7 +21,7 @@ class Posts extends Component{
                 const updatePosts = posts.map( ( post ) => { 
                     return { ...post, author:'Huguez' } 
                  } );
-                
+                // console.log(updatePosts);
                 this.setState( { posts: updatePosts } );
             }
         ).catch( err =>{
@@ -30,7 +31,9 @@ class Posts extends Component{
     }
 
     postSelector = ( id ) => {
-        this.setState( { selectedId: id } )
+        this.props.history.push( { pathname: '/posts/' + id } );
+        // this.props.history.push( '/' + id  );
+        
     }
 
     render(){
@@ -39,7 +42,7 @@ class Posts extends Component{
         
         if( !this.state.error ){
             posts = this.state.posts.map( ( p ) => { 
-                return (<Link key={ p.id } to={ '/' + p.id }><Post 
+                return (<Link key={ p.id } to={ '/posts/' + p.id }><Post 
                     clicked={ () => this.postSelector( p.id )  }
                     title={ p.title } 
                     author={ p.author } /> </Link>)
@@ -47,9 +50,13 @@ class Posts extends Component{
         }
 
         return (
-            <section className={classes.Posts}>
-                { posts }
-            </section>
+            <div>
+                <section className={classes.Posts}>
+                    { posts }
+                </section>
+                <Route path={this.props.match.url + '/:id' } exact component={ FullPost }/>
+            </div>
+            
         );
     }
 }
