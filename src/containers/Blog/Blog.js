@@ -10,6 +10,9 @@ import classes from './Blog.css';
 import { Route, NavLink, Switch, Redirect } from 'react-router-dom';
 
 class Blog extends Component {
+    state={
+        auth: false
+    }
 
     render () {        
         return (
@@ -22,6 +25,7 @@ class Blog extends Component {
                                 to="/posts/"
                                 activeClassName="my-active"
                                 activeStyle={{ color: '#fa923f', textDecoration: 'underline'  }}>Posts</NavLink ></li>
+                            
                             <li><NavLink 
                                 activeClassName="my-active"
                                 activeStyle={{ color: '#fa923f', textDecoration: 'underline'  }}
@@ -33,10 +37,11 @@ class Blog extends Component {
                     </nav>
                 </header>
                 <Switch>
+                    { this.state.auth ? <Route path="/newPost" component={ NewPost }/> : null }
                     <Route path="/newPost" component={ NewPost }/>
                     <Route path="/posts" component={ Posts }/>
-
-                    <Redirect from ="/" to="posts"/>
+                    <Route render={ () => <h1>not found!!!</h1> }/>
+                    {/* <Redirect from ="/" to="posts"/> */}
                     {/* <Route path="/:id" exact component={ FullPost }/> */}
                 </Switch>
             </div>
